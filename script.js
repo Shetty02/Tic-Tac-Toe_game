@@ -1,6 +1,7 @@
 console.log('Welcome to Tic Tac Toe');
 let turn = 'X'
 let gameOver = false;
+let draw = 0;
 
 // Function to change the turn
 const changeTurn = () =>{
@@ -22,13 +23,26 @@ const checkWin = () =>{
    ];
 
    wins.forEach(e =>{
-    if( (boxtext[e[0]].innerText === boxtext[e[1]].innerText) && (boxtext[e[2]].innerText === boxtext[e[1]].innerText) && (boxtext[e[0]].innerText !== '')  ){
-        document.querySelector('.info').innerText = boxtext[e[0]].innerText + "won"
+    if( (boxtext[e[0]].innerText === boxtext[e[1]].innerText) && (boxtext[e[2]].innerText === boxtext[e[1]].innerText)&& (boxtext[e[0]].innerText !== '')   ){
+        document.querySelector('.info').innerText = boxtext[e[0]].innerText + " won"
         gameOver = true;
         turn = "";
         document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "200px";
     }
-   })
+    else if(draw === 9){
+        document.querySelector('.info').innerText = "Tie"
+        gameOver = true
+    }
+    // else {
+        //     draw++;
+        // }
+    })
+    // console.log(draw)
+//    console.log(draw)
+//    if(draw === 72){
+//     document.querySelector('.info').innerText = "Tie"
+//     gameOver = true
+//    }
 }
 
 
@@ -38,6 +52,7 @@ const checkWin = () =>{
     let boxtext = element.querySelector('.boxtext');
     element.addEventListener('click', () =>{
         if(boxtext.innerText === ''){
+            draw++;
             boxtext.innerText = turn;
             turn = changeTurn();
             checkWin();
@@ -45,6 +60,7 @@ const checkWin = () =>{
                 document.getElementsByClassName('info')[0].innerText = 'Turn for: ' + turn;
             }
         }
+        
     })
  });
 
@@ -55,8 +71,9 @@ reset.addEventListener('click', ()=>{
         element.innerText = ''
     })
     turn = "X";
+    document.getElementsByClassName('info')[0].innerText = 'Turn for: ' + turn;    
+    draw = 0;
     gameOver = false;
     document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0";
-
 
 })
